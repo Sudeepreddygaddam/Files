@@ -1,0 +1,68 @@
+Deployment in Node.js using Nginx server on Ubuntu Instance
+
+$ sudo apt update
+$ sudo apt install nodejs npm
+$ clone the Git Repo (git clone give git repo)
+$ cd /repo 
+$ npm init –y
+$ npm install socket.io express cors dotenv
+$ sudo apt install nginx –y
+$ sudo sysemctl start nginx
+$ sudo systemctl enable nginx
+$ sudo npm install –g pm2
+$pm2 –v
+$ cd /etc/nginx/sites-available   
+$ ls
+vi /default server
+ {
+    listen 80;
+    server_name yourdomain.com;
+
+    location / {
+        proxy_pass http://localhost:3000;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection 'upgrade';
+        proxy_set_header Host $host;
+        proxy_cache_bypass $http_upgrade;
+    }
+
+    # Optional: Serve static files directly by Nginx
+    # location /static {
+    #     alias /path/to/your/static/files;
+    # }
+
+$ sudo systemctl restart nginx
+$ sudo su –
+$ cd/repo
+$ pm2 start npm --name “server” – start
+$ pm2 logs
+$ pm2 list
+$ sudo systemctl restart nginx
+$ cd /etc/nginx/sites-available
+$ cd /etc/nginx/sites-enable
+$ ls
+ Certifying a website to https that deployed in the aws ec2
+
+In the terminal run the command to install the certbot if not exists
+Using snap
+$ sudo snap install core; sudo snap refresh core
+$ sudo snap install --classic certbot
+$ sudo ln -s /snap/bin/certbot /usr/bin/certbot
+
+
+
+This command will create and install the certificate 
+
+$ sudo certbot –nginx
+$ sudo systemctl restart nginx
+$ sudo su –
+$ pm2 list
+$ pm2 logs
+$ cd git repo 
+$ pm2 restart all
+$ pm2 logs
+
+
+
+
